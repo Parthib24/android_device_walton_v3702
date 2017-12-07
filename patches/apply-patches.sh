@@ -1,4 +1,5 @@
 #!/bin/bash
+cd ../../../..
 cd system/core
 git apply -v ../../device/Homtom/HT16/patches/0001-Remove-CAP_SYS_NICE-from-surfaceflinger.patch
 git apply -v ../../device/Homtom/HT16/patches/0004-libnetutils-add-MTK-bits-ifc_ccmni_md_cfg.patch
