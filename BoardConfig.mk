@@ -49,7 +49,7 @@ BOARD_KERNEL_IMAGE_NAME := zImage-dtb
 TARGET_KERNEL_SOURCE := kernel/wiko/mt6580
 
 #TARGET_PREBUILT_KERNEL := device/walton/v3702/kernel
-BOARD_CUSTOM_BOOTIMG := true
+#BOARD_CUSTOM_BOOTIMG := true
 TARGET_KMODULES := true
 
 # Assert
