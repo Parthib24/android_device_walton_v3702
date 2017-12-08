@@ -60,4 +60,4 @@ fmradio.driver.enable=1
 # Ril
 persist.radio.multisim.config=dsds
 ro.telephony.ril_class=MT6580
-ro.telephony.ril.config=fakeiccid
+ro.telephony.ril.config=signalstrength
