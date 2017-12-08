@@ -2,17 +2,14 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # These additionals go to /default.prop
-ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0 \
+ADDITIONAL_DEFAULT_PROPERTIES += \
+ro.secure=0 \
 ro.allow.mock.location=1 \
 ro.debuggable=1 \
 ro.adb.secure=0 \
 persist.service.acm.enable=0 \
 ro.mount.fs=EXT4 \
 debug.hwui.render_dirty_regions=false \
-ro.sf.lcd_density=320 \
-persist.radio.multisim.config=dsds \
-ro.telephony.ril_class=MT6580 \
-ro.telephony.ril.config=fakeiccid \
 ro.telephony.sim.count=2 \
 persist.gemini.sim_num=2 \
 ril.current.share_modem=2 \
@@ -24,17 +21,12 @@ persist.sys.display.clearMotion=0
 # The gps config appropriate for this device
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
-$(call inherit-product-if-exists, vendor/Homtom/HT16/HT16-vendor.mk)
+$(call inherit-product-if-exists, vendor/walton/v3702/v3702-vendor.mk)
 
-DEVICE_PACKAGE_OVERLAYS += device/Homtom/HT16/overlay
-PRODUCT_PACKAGE_OVERLAYS += device/Homtom/HT16/overlay # enable this to be able overlay a default wallpaper
+DEVICE_PACKAGE_OVERLAYS += device/walton/v3702/overlay
+PRODUCT_PACKAGE_OVERLAYS += device/walton/v3702/overlay # enable this to be able overlay a default wallpaper
 
-LOCAL_PATH := device/Homtom/HT16
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
-else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
+LOCAL_PATH := device/walton/v3702
 
 PRODUCT_PACKAGES += \
     libxlog \
@@ -145,8 +137,8 @@ PRODUCT_PACKAGES += \
     mrdump_tool
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
-PRODUCT_NAME := aosp_HT16
-PRODUCT_DEVICE := HT16
+PRODUCT_NAME := aosp_v3702
+PRODUCT_DEVICE := v3702
 
 TARGET_SCREEN_HEIGHT := 1280
 TARGET_SCREEN_WIDTH := 720

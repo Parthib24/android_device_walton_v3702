@@ -1,15 +1,15 @@
 # Release name
-PRODUCT_RELEASE_NAME := HT16
+PRODUCT_RELEASE_NAME := v3702
 
 # Inherit some common CM stuff.
 #$(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 # Inherit device configuration
-$(call inherit-product, device/Homtom/HT16/aosp_HT16.mk)
+$(call inherit-product, device/walton/v3702/aosp_v3702.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := HT16
-PRODUCT_NAME := aosp_HT16
-PRODUCT_BRAND := Homtom
-PRODUCT_MODEL := Homtom HT16
-PRODUCT_MANUFACTURER := Homtom
+PRODUCT_DEVICE := v3702
+PRODUCT_NAME := aosp_v3702
+PRODUCT_BRAND := WALTON
+PRODUCT_MODEL := Primo GH6-v3702
+PRODUCT_MANUFACTURER := WALTON

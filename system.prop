@@ -38,7 +38,7 @@ ro.kernel.zio=38,108,105,16
 # Disable dirty region for Mali
 debug.hwui.render_dirty_regions=false
 
-ro.sf.lcd_density=320
+ro.sf.lcd_density=310
 
 # performance
 ro.mtk_perf_simple_start_win=1
@@ -56,3 +56,8 @@ ro.telephony.default_network=9
 persist.sys.display.clearMotion=0
 
 fmradio.driver.enable=1
+
+# Ril
+persist.radio.multisim.config=dsds
+ro.telephony.ril_class=MT6580
+ro.telephony.ril.config=fakeiccid

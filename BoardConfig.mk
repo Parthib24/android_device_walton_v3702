@@ -1,7 +1,7 @@
 # inherit from the proprietary version
--include vendor/Homtom/HT16/BoardConfigVendor.mk
+-include vendor/walton/v3702/BoardConfigVendor.mk
 
-TARGET_SPECIFIC_HEADER_PATH := device/Homtom/HT16/include
+TARGET_SPECIFIC_HEADER_PATH := device/walton/v3702/include
 
 # Platform
 TARGET_BOARD_PLATFORM := mt6580
@@ -21,13 +21,6 @@ TARGET_BOOTLOADER_BOARD_NAME := mt6580
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
 
-# Kernel
-BOARD_KERNEL_CMDLINE += \
-	bootopt=64S3,32S1,32S1 \
-	androidboot.selinux=permissive
-BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_PAGESIZE := 2048
-
 # make_ext4fs requires numbers in dec format
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216 
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216 
@@ -36,15 +29,31 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 3975675904
 BOARD_CACHEIMAGE_PARTITION_SIZE := 419430400
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-TARGET_PREBUILT_KERNEL := device/Homtom/HT16/kernel
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x04000000 --tags_offset 0x0e000000
 
+# Kernel
+BOARD_KERNEL_CMDLINE += \
+	bootopt=64S3,32S1,32S1 \
+	androidboot.selinux=permissive
+BOARD_KERNEL_BASE := 0x80000000
+BOARD_KERNEL_PAGESIZE := 2048
+
+BOARD_RAMDISK_OFFSET := 0x04000000
+BOARD_TAGS_OFFSET := 0x0e000000
+BOARD_KERNEL_OFFSET = 0x00080000
+
+# Kernel source config
+ARCH := arm
+TARGET_KERNEL_ARCH := arm
+TARGET_KERNEL_CONFIG := v3702_defconfig
+BOARD_KERNEL_IMAGE_NAME := zImage-dtb
+TARGET_KERNEL_SOURCE := kernel/wiko/mt6580
+
+#TARGET_PREBUILT_KERNEL := device/walton/v3702/kernel
 BOARD_CUSTOM_BOOTIMG := true
-
 TARGET_KMODULES := true
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := HT16
+TARGET_OTA_ASSERT_DEVICE := v3702
 
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
@@ -52,7 +61,7 @@ TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 TARGET_CPU_MEMCPY_OPT_DISABLE := true
 
 # EGL
-BOARD_EGL_CFG := device/Homtom/HT16/configs/egl.cfg
+BOARD_EGL_CFG := device/walton/v3702/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
@@ -62,7 +71,7 @@ BOARD_HAS_MTK_HARDWARE := true
 MTK_HARDWARE := true
 
 # RIL 
-BOARD_RIL_CLASS := ../../../device/Homtom/HT16/ril/
+BOARD_RIL_CLASS := ../../../walton/v3702/HT16/ril/
 
 BOARD_CONNECTIVITY_VENDOR := MediaTek
 BOARD_CONNECTIVITY_MODULE := conn_soc
@@ -82,7 +91,7 @@ WIFI_DRIVER_FW_PATH_P2P:=P2P
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_MTK := true
 BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/Homtom/HT16/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/walton/v3702/bluetooth
 
 # Offline charging
 BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
@@ -91,8 +100,8 @@ BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
 TARGET_NO_SENSOR_PERMISSION_CHECK := true
 
 # CWM
-TARGET_RECOVERY_FSTAB := device/Homtom/HT16/rootdir/root/recovery.fstab
-TARGET_PREBUILT_RECOVERY_KERNEL := device/Homtom/HT16/kernel
+TARGET_RECOVERY_FSTAB := device/walton/v3702/rootdir/root/recovery.fstab
+TARGET_PREBUILT_RECOVERY_KERNEL := device/walton/v3702/kernel
 BOARD_HAS_NO_SELECT_BUTTON := true
 
 # TWRP stuff
@@ -114,7 +123,7 @@ TW_USE_TOOLBOX := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
 BOARD_SEPOLICY_DIRS := \
-       device/Homtom/HT16/sepolicy
+       device/walton/v3702/sepolicy
 
 # Use old sepolicy version
 POLICYVERS := 29
@@ -123,4 +132,4 @@ BLOCK_BASED_OTA := false
 TARGET_LDPRELOAD += libxlog.so:libmtk_symbols.so
 
 # Seccomp filter
-BOARD_SECCOMP_POLICY += device/Homtom/HT16/seccomp
+BOARD_SECCOMP_POLICY += device/walton/v3702/seccomp
