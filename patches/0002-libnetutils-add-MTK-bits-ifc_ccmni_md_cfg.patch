@@ -5,15 +5,15 @@ Subject: [PATCH] libnetutils add MTK bits (ifc_ccmni_md_cfg and others)
 
 Change-Id: I3fb6f47d35cf0d20352f7caef4a05d7536169480
 ---
- include/netutils/ifc.h  |  16 +++
- libnetutils/Android.mk  |   7 ++
- libnetutils/ifc_utils.c | 270 ++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 293 insertions(+)
+ libnetutils/include/netutils/ifc.h | 16 ++++++++++++++++
+ libnetutils/Android.bp | 2 +-
+ libnetutils/ifc_utils.c | 269 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 286 insertions(+), 1 deletion(-)
 
-diff --git a/include/netutils/ifc.h b/include/netutils/ifc.h
-index 3b27234..89028a3 100644
---- a/include/netutils/ifc.h
-+++ b/include/netutils/ifc.h
+diff --git a/libnetutils/include/netutils/ifc.h b/libnetutils/include/netutils/ifc.h
+index 3b272343d..2d8ba305d 100644
+--- a/libnetutils/include/netutils/ifc.h
++++ b/libnetutils/include/netutils/ifc.h
 @@ -61,6 +61,22 @@ extern int ifc_configure(const char *ifname, in_addr_t address,
  
  extern in_addr_t prefixLengthToIpv4Netmask(int prefix_length);
@@ -29,37 +29,32 @@ index 3b27234..89028a3 100644
 +extern int ifc_set_txq_state(const char *ifname, int state);
 +extern int ifc_ccmni_md_cfg(const char *ifname, int md_id);
 +struct uid_err {
-+    int appuid;
-+	int errorNum;
++int appuid;
++int errorNum;
 +};
 +#endif /* MTK_HARDWARE */
 +
  __END_DECLS
  
  #endif /* _NETUTILS_IFC_H_ */
-diff --git a/libnetutils/Android.mk b/libnetutils/Android.mk
-index ff899c0..8c53349 100644
---- a/libnetutils/Android.mk
-+++ b/libnetutils/Android.mk
-@@ -15,6 +15,13 @@ LOCAL_MODULE := libnetutils
+diff --git a/libnetutils/Android.bp b/libnetutils/Android.bp
+index d63d619e6..0b0fbda8b 100644
+--- a/libnetutils/Android.bp
++++ b/libnetutils/Android.bp
+@@ -14,7 +14,7 @@ cc_library_shared {
+         "liblog",
+     ],
  
- LOCAL_CFLAGS := -Werror
+-    cflags: ["-Werror"],
++    cflags: ["-Werror -DMTK_HARDWARE -Wno-unused-parameter"],
  
-+ifeq ($(BOARD_HAS_MTK_HARDWARE),true)
-+LOCAL_CFLAGS += -DMTK_HARDWARE -Wno-unused-parameter
-+endif
-+
-+$(info TARGET_GLOBAL_CFLAGS: $(TARGET_GLOBAL_CFLAGS))
-+$(info LOCAL_CFLAGS: $(LOCAL_CFLAGS))
-+
- include $(BUILD_SHARED_LIBRARY)
- 
- include $(CLEAR_VARS)
+     export_include_dirs: ["include"],
+ }
 diff --git a/libnetutils/ifc_utils.c b/libnetutils/ifc_utils.c
-index 7739cf4..fcf0529 100644
+index a098d596e..fa9243d9a 100644
 --- a/libnetutils/ifc_utils.c
 +++ b/libnetutils/ifc_utils.c
-@@ -40,6 +40,10 @@
+@@ -47,11 +47,19 @@
  
  #include "netutils/ifc.h"
  
@@ -67,10 +62,8 @@ index 7739cf4..fcf0529 100644
 +#include <linux/un.h>
 +#endif
 +
- #ifdef ANDROID
- #define LOG_TAG "NetUtils"
- #include <cutils/log.h>
-@@ -56,6 +60,10 @@
+ #if defined(__ANDROID__)
+ /* SIOCKILLADDR is an Android extension. */
  #define SIOCKILLADDR 0x8939
  #endif
  
@@ -81,11 +74,10 @@ index 7739cf4..fcf0529 100644
  static int ifc_ctl_sock = -1;
  static int ifc_ctl_sock6 = -1;
  static pthread_mutex_t ifc_sock_mutex = PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP;
-@@ -737,3 +745,265 @@ ifc_configure(const char *ifname,
+@@ -725,3 +733,264 @@ ifc_configure(const char *ifname,
  
      return 0;
  }
-+
 +
 +/* MTK */
 +#ifdef MTK_HARDWARE
@@ -324,7 +316,7 @@ index 7739cf4..fcf0529 100644
 +    struct ifreq ifr;
 +    int ret = 0;
 +    int ctl_sock = 0;
-+
++    
 +    ifc_init_ifr(ifname, &ifr);
 +    ifr.ifr_ifru.ifru_ivalue = md_id;
 +

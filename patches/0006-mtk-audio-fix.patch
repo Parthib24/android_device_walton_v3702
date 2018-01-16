@@ -5,47 +5,45 @@ Subject: [PATCH] mtk audio fix
 
 Change-Id: I9b5753457cb26d8ac47052674ebe6c7c18666a92
 ---
- media/libmedia/Android.mk         |  11 +-
- media/libmedia/mtkaudio_stubs.cpp | 215 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 224 insertions(+), 2 deletions(-)
+ media/libmedia/Android.mk | 4 +++-
+ media/libmedia/mtkaudio_stubs.cpp | 214 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 217 insertions(+), 1 deletions(-)
  create mode 100644 media/libmedia/mtkaudio_stubs.cpp
 
 diff --git a/media/libmedia/Android.mk b/media/libmedia/Android.mk
-index df4e4b6..34f6128 100644
+index e6677866c..76b20886f 100644
 --- a/media/libmedia/Android.mk
 +++ b/media/libmedia/Android.mk
-@@ -7,7 +7,7 @@ LOCAL_SRC_FILES:= \
- LOCAL_MODULE:= libmedia_helper
- LOCAL_MODULE_TAGS := optional
- 
--LOCAL_CFLAGS += -Werror -Wno-error=deprecated-declarations -Wall
-+LOCAL_CFLAGS += -Wno-error=deprecated-declarations -Wall
- LOCAL_CLANG := true
- 
- include $(BUILD_STATIC_LIBRARY)
-@@ -97,7 +97,14 @@ LOCAL_C_INCLUDES := \
-     $(call include-path-for, audio-effects) \
+@@ -37,6 +37,7 @@ LOCAL_SRC_FILES += \
+     MediaUtils.cpp \
+     Metadata.cpp \
+     mediarecorder.cpp \
++    mtkaudio_stubs.cpp \
+     IMediaMetadataRetriever.cpp \
+     mediametadataretriever.cpp \
+     MidiDeviceInfo.cpp \
+@@ -102,13 +103,14 @@ LOCAL_C_INCLUDES := \
+     $(TOP)/frameworks/av/media/libmedia/aidl \
+     $(TOP)/frameworks/av/include \
+     $(TOP)/frameworks/native/include \
++    $(TOP)/frameworks/rs/server \
      $(call include-path-for, audio-utils)
  
+ LOCAL_EXPORT_C_INCLUDE_DIRS := \
+     frameworks/av/include/media \
+     frameworks/av/media/libmedia/aidl \
+ 
 -LOCAL_CFLAGS += -Werror -Wno-error=deprecated-declarations -Wall
-+### audio.primary.mt6580.so ->_ZN7android11AudioSystem24getVoiceUnlockDLInstanceEv ###
-+LOCAL_SRC_FILES += \
-+    mtkaudio_stubs.cpp
-+
-+# StrongPointer.h
-+LOCAL_C_INCLUDES += $(TOP)/frameworks/rs/server
-+
 +LOCAL_CFLAGS += -Wno-error=deprecated-declarations -Wall
- LOCAL_CLANG := true
- LOCAL_SANITIZE := unsigned-integer-overflow signed-integer-overflow
+ LOCAL_SANITIZE := unsigned-integer-overflow signed-integer-overflow cfi
+ LOCAL_SANITIZE_DIAG := cfi
  
 diff --git a/media/libmedia/mtkaudio_stubs.cpp b/media/libmedia/mtkaudio_stubs.cpp
 new file mode 100644
-index 0000000..26802ef
+index 000000000..15b6ff8f1
 --- /dev/null
 +++ b/media/libmedia/mtkaudio_stubs.cpp
-@@ -0,0 +1,215 @@
-+// #include <MtpTypes.h>
+@@ -0,0 +1,214 @@
 +#include <system/audio.h>
 +#include <StrongPointer.h>
 +#include <media/IAudioFlinger.h>

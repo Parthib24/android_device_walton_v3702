@@ -12,31 +12,30 @@ Change-Id: Ia1602cdc6d36bead4ce8a49e323a29eda6c53022
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/init/init.cpp b/init/init.cpp
-index 9992b47..9a24167 100755
+index 1968eb656..b54bde974 100644
 --- a/init/init.cpp
 +++ b/init/init.cpp
-@@ -85,7 +85,7 @@ int have_console;
- std::string console_name = "/dev/console";
- static time_t process_needs_restart;
+@@ -83,7 +83,7 @@ static char qemu[32];
+ std::string default_console = "/dev/console";
+ static time_t process_needs_restart_at;
  
 -const char *ENV[32];
 +const char *ENV[64];
  
- bool waiting_for_exec = false;
- 
+ static int epoll_fd = -1;
 diff --git a/init/init.h b/init/init.h
-index 345d442..f93d0c5 100644
+index 1da335030..f901b10eb 100644
 --- a/init/init.h
 +++ b/init/init.h
-@@ -24,7 +24,7 @@ class Service;
+@@ -19,7 +19,7 @@
  
- #define COMMAND_RETRY_TIMEOUT 5
+ #include <string>
  
 -extern const char *ENV[32];
 +extern const char *ENV[64];
- extern bool waiting_for_exec;
- extern int have_console;
- extern std::string console_name;
+ extern std::string default_console;
+ extern struct selabel_handle *sehandle;
+ extern struct selabel_handle *sehandle_prop;
 -- 
 2.7.4
 
