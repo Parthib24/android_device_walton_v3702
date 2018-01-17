@@ -28,6 +28,89 @@ PRODUCT_PACKAGE_OVERLAYS += device/walton/v3702/overlay # enable this to be able
 
 LOCAL_PATH := device/walton/v3702
 
+
+# HIDL
+PRODUCT_COPY_FILES += \
+    device/walton/v3702/hidl/manifest.xml:system/vendor/manifest.xml
+
+PRODUCT_PACKAGES += \    
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio.effect@2.0-impl \
+    android.hardware.audio@2.0-service \
+    android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth@1.0-service \
+    camera.device@1.0-impl \
+    camera.device@3.2-impl \
+    android.hardware.camera.provider@2.4-impl \
+    android.hardware.camera.provider@2.4-service
+
+
+# Vibrator
+PRODUCT_PACKAGES += \
+    android.hardware.vibrator@1.0-impl \
+    android.hardware.vibrator@1.0-service
+    
+# Keymaster HAL
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl
+    
+# Gatekeeper HAL
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper@1.0-impl \
+    android.hardware.gatekeeper@1.0-service
+    
+# Sensors HAL
+PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-impl \
+    android.hardware.light@2.0-service \
+    android.hardware.sensors@1.0-impl \
+    android.hardware.sensors@1.0-service \
+   
+# Drm HAL 
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0-impl
+   
+# GPS HAL
+PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.0-impl
+    
+# GPS force mode
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.force.gps.mode=gnss
+   
+# USB HAL
+PRODUCT_PACKAGES += \
+    android.hardware.usb@1.0-service
+    
+# Health HAL
+PRODUCT_PACKAGES += \
+    android.hardware.health@1.0-impl \
+    android.hardware.health@1.0-service
+    
+# Power HAL
+PRODUCT_PACKAGES += \
+    android.hardware.power@1.0-impl
+    
+# Graphic HAL
+PRODUCT_PACKAGES += \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.allocator@2.0-service \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.mapper@2.0-impl \
+    android.hardware.renderscript@1.0-impl \
+    android.hardware.memtrack@1.0-impl \
+    libgralloc_extra \
+    libgui_ext \
+    libui_ext
+    
+# Omx HAL
+PRODUCT_PACKAGES += \
+    android.hardware.media.omx@1.0
+
+# Storage
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.sdcardfs=true
+
 PRODUCT_PACKAGES += \
     libxlog \
     libmtk_symbols

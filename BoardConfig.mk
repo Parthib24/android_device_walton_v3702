@@ -15,6 +15,8 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_CPU_VARIANT := cortex-a7
 
+TARGET_NO_FACTORYIMAGE := true
+
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := mt6580
 
@@ -41,6 +43,12 @@ BOARD_RAMDISK_OFFSET := 0x04000000
 BOARD_TAGS_OFFSET := 0x0e000000
 BOARD_KERNEL_OFFSET = 0x00080000
 
+KERNEL_ARCH := arm
+TARGET_KERNEL_ARCH := arm
+TARGET_KERNEL_CONFIG := v3702_defconfig
+BOARD_KERNEL_IMAGE_NAME := zImage-dtb
+TARGET_KERNEL_SOURCE := kernel/wiko/mt6580
+
 # Kernel source config
 ARCH := arm
 TARGET_KERNEL_ARCH := arm
@@ -63,8 +71,10 @@ TARGET_CPU_MEMCPY_OPT_DISABLE := true
 # EGL
 BOARD_EGL_CFG := device/walton/v3702/configs/egl.cfg
 USE_OPENGL_RENDERER := true
-BOARD_EGL_WORKAROUND_BUG_10194508 := true
+#BOARD_EGL_WORKAROUND_BUG_10194508 := true
 TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
+
+#TARGET_OMX_LEGACY_RESCALING := true
 
 # MTK Hardware
 BOARD_HAS_MTK_HARDWARE := true
@@ -95,13 +105,14 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/walton/v3702/bluetooth
 
 # Offline charging
 BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
+WITH_LINEAGE_CHARGER := false
 
 # Sensors
 TARGET_NO_SENSOR_PERMISSION_CHECK := true
+TARGET_SENSORS_DEVICE_API_VERSION := SENSORS_DEVICE_API_VERSION_1_1
 
 # CWM
 TARGET_RECOVERY_FSTAB := device/walton/v3702/rootdir/root/recovery.fstab
-TARGET_PREBUILT_RECOVERY_KERNEL := device/walton/v3702/kernel
 BOARD_HAS_NO_SELECT_BUTTON := true
 
 # TWRP stuff
@@ -125,11 +136,15 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_
 BOARD_SEPOLICY_DIRS := \
        device/walton/v3702/sepolicy
 
-# Use old sepolicy version
-POLICYVERS := 29
+# Already updated in kernel
+# Use old sepolicy version 
+# POLICYVERS := 29 
 
 BLOCK_BASED_OTA := false
 TARGET_LDPRELOAD += libxlog.so:libmtk_symbols.so
 
 # Seccomp filter
 BOARD_SECCOMP_POLICY += device/walton/v3702/seccomp
+
+#HIDL
+DEVICE_MANIFEST_FILE := device/walton/v3702/hidl/manifest.xml
